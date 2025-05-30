@@ -1,14 +1,12 @@
-
 from django.urls import path
-from .views import AdminDashboard
-from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import RiskViewSet, AdminDashboard
+from .views import RiskViewSet, AdminDashboard, DashboardMetrics, RiskHeatmap
 
 router = DefaultRouter()
-router.register(r'risks', RiskViewSet)
+router.register('risks', RiskViewSet, basename='risks')
 
-urlpatterns = [
+urlpatterns = router.urls + [
     path('admin/dashboard/', AdminDashboard.as_view()),
-    path('', include(router.urls)),
+    path('dashboard/metrics/', DashboardMetrics.as_view()),
+    path('dashboard/heatmap/', RiskHeatmap.as_view()),
 ]
