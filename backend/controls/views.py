@@ -10,7 +10,6 @@ class FrameworkViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsAdmin]
 
 class ControlViewSet(viewsets.ModelViewSet):
-    queryset = Control.objects.select_related('framework', 'owner').all()
+    queryset = Control.objects.select_related('framework', 'owner').prefetch_related('risks').all()
     serializer_class = ControlSerializer
     permission_classes = [IsAuthenticated, ReadOnlyOrAdminManager]
-
